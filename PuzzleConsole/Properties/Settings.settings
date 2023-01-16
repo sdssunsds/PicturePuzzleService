@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PuzzleConsole.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EnginePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\cutimg.engine</Value>
+    </Setting>
+    <Setting Name="UploadPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\Upload\</Value>
+    </Setting>
+    <Setting Name="PuzzlePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\Puzzle\</Value>
+    </Setting>
+    <Setting Name="BakPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\Bak\</Value>
+    </Setting>
+    <Setting Name="ZipPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\Zip\{0}.zip</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

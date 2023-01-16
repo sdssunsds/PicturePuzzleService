@@ -1,0 +1,14 @@
+IExport* ExportObjectFactory();
+创建类函数，无输入。只调用一次
+返回类指针IExport*。
+void DestroyExportObject(IExport* obj);
+删除（析构）类函数，输入类指针obj);只调用一次
+无返回值，
+int CallOnInit(IExport* obj);
+初始化函数，输入类指针，只调用一次
+返回值为0.
+注：初始化的时间会相对较长。
+std::string Callcutimg(IExport* obj, const char* path, const char* train_type, const char* time);
+切图函数，每切一辆列车（8节）调用一次，
+输入参数为4个：obj,：类指针，path图片路径, train_type, 列车型号如380AL_2572,time 时间
+返回值为string格式：如果切完则返回：“图像分割任务完成"，其他返回值为相对应的失败原因描述。

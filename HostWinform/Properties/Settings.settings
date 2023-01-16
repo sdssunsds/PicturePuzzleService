@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HostWinform.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ServicePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8001/</Value>
+    </Setting>
+    <Setting Name="UploadPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\Upload\</Value>
+    </Setting>
+    <Setting Name="PuzzlePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\Puzzle\</Value>
+    </Setting>
+    <Setting Name="ZipPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\Zip\{0}.zip</Value>
+    </Setting>
+    <Setting Name="PuzzleEXEConfig" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\PuzzleService\config.txt</Value>
+    </Setting>
+    <Setting Name="UploadDataServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://101.35.202.172/api</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
