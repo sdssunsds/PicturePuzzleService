@@ -25,42 +25,6 @@ namespace HostWinform.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8001/")]
-        public string ServicePath {
-            get {
-                return ((string)(this["ServicePath"]));
-            }
-            set {
-                this["ServicePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\PuzzleService\\Upload\\")]
-        public string UploadPath {
-            get {
-                return ((string)(this["UploadPath"]));
-            }
-            set {
-                this["UploadPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\PuzzleService\\Puzzle\\")]
-        public string PuzzlePath {
-            get {
-                return ((string)(this["PuzzlePath"]));
-            }
-            set {
-                this["PuzzlePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("D:\\PuzzleService\\Zip\\{0}.zip")]
         public string ZipPath {
             get {
@@ -85,13 +49,49 @@ namespace HostWinform.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://101.35.202.172/api")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.120/api")]
         public string UploadDataServer {
             get {
                 return ((string)(this["UploadDataServer"]));
             }
             set {
                 this["UploadDataServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.102:8001/")]
+        public string ServicePath {
+            get {
+                return ((string)(this["ServicePath"]));
+            }
+            set {
+                this["ServicePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\sourceETL\\Upload\\")]
+        public string UploadPath {
+            get {
+                return ((string)(this["UploadPath"]));
+            }
+            set {
+                this["UploadPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\sourceETL\\sourceFolders\\source\\")]
+        public string PuzzlePath {
+            get {
+                return ((string)(this["PuzzlePath"]));
+            }
+            set {
+                this["PuzzlePath"] = value;
             }
         }
     }

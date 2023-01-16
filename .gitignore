@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Dll/cudnn_adv_infer64_8.dll.###
+/Dll/cudnn64_8.dll
+/Dll/axis_check.lib
+/Dll/axis_check.dll
