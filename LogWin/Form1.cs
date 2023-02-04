@@ -68,12 +68,12 @@ namespace LogWin
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            progressBar1.Value = 0;
             Bind();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            progressBar1.Maximum = barMax;
             if (barIndex > 0 && barIndex < barMax)
             {
                 progressBar1.Value = (int)barIndex;
@@ -94,6 +94,7 @@ namespace LogWin
                     List<LogModel> list = new List<LogModel>();
                     string[] fileNames = Directory.GetFiles(path);
                     barMax = fileNames.Length * 1000;
+                    Invoke(new Action(() => { progressBar1.Maximum = barMax; }));
                     foreach (string name in fileNames)
                     {
                         if (name.Contains(".xml"))
@@ -108,6 +109,7 @@ namespace LogWin
                                 XmlModel xm = xml["log"][i];
                                 string time = xm["time"];
                                 string log = xm["text"];
+                                log = log.Replace("&quot;", "\"");
                                 string[] vs = time.Split(':');
                                 int tv = int.Parse(vs[0]) * 3600 + int.Parse(vs[1]) * 60 + int.Parse(vs[2]);
                                 List<LogModel> logs = list.FindAll(l => l.time == time);
