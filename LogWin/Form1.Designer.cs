@@ -69,15 +69,17 @@ namespace LogWin
             this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1006, 25);
+            this.panel1.Size = new System.Drawing.Size(754, 20);
             this.panel1.TabIndex = 0;
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(806, 0);
+            this.dateTimePicker1.Location = new System.Drawing.Point(604, 0);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(164, 25);
+            this.dateTimePicker1.Size = new System.Drawing.Size(124, 21);
             this.dateTimePicker1.TabIndex = 8;
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
@@ -86,9 +88,10 @@ namespace LogWin
             this.checkBox8.AutoSize = true;
             this.checkBox8.Checked = true;
             this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox8.Location = new System.Drawing.Point(714, 2);
+            this.checkBox8.Location = new System.Drawing.Point(536, 2);
+            this.checkBox8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(89, 19);
+            this.checkBox8.Size = new System.Drawing.Size(72, 16);
             this.checkBox8.TabIndex = 7;
             this.checkBox8.Text = "异常日志";
             this.checkBox8.UseVisualStyleBackColor = true;
@@ -99,9 +102,10 @@ namespace LogWin
             this.checkBox7.AutoSize = true;
             this.checkBox7.Checked = true;
             this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox7.Location = new System.Drawing.Point(619, 2);
+            this.checkBox7.Location = new System.Drawing.Point(464, 2);
+            this.checkBox7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(89, 19);
+            this.checkBox7.Size = new System.Drawing.Size(72, 16);
             this.checkBox7.TabIndex = 6;
             this.checkBox7.Text = "点云日志";
             this.checkBox7.UseVisualStyleBackColor = true;
@@ -112,9 +116,10 @@ namespace LogWin
             this.checkBox6.AutoSize = true;
             this.checkBox6.Checked = true;
             this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.Location = new System.Drawing.Point(530, 2);
+            this.checkBox6.Location = new System.Drawing.Point(398, 2);
+            this.checkBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(83, 19);
+            this.checkBox6.Size = new System.Drawing.Size(66, 16);
             this.checkBox6.TabIndex = 5;
             this.checkBox6.Text = "RGV日志";
             this.checkBox6.UseVisualStyleBackColor = true;
@@ -125,9 +130,10 @@ namespace LogWin
             this.checkBox5.AutoSize = true;
             this.checkBox5.Checked = true;
             this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5.Location = new System.Drawing.Point(435, 2);
+            this.checkBox5.Location = new System.Drawing.Point(326, 2);
+            this.checkBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(89, 19);
+            this.checkBox5.Size = new System.Drawing.Size(72, 16);
             this.checkBox5.TabIndex = 4;
             this.checkBox5.Text = "雷达日志";
             this.checkBox5.UseVisualStyleBackColor = true;
@@ -138,9 +144,10 @@ namespace LogWin
             this.checkBox4.AutoSize = true;
             this.checkBox4.Checked = true;
             this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Location = new System.Drawing.Point(325, 2);
+            this.checkBox4.Location = new System.Drawing.Point(244, 2);
+            this.checkBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(104, 19);
+            this.checkBox4.Size = new System.Drawing.Size(84, 16);
             this.checkBox4.TabIndex = 3;
             this.checkBox4.Text = "后面阵日志";
             this.checkBox4.UseVisualStyleBackColor = true;
@@ -151,9 +158,10 @@ namespace LogWin
             this.checkBox3.AutoSize = true;
             this.checkBox3.Checked = true;
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(215, 2);
+            this.checkBox3.Location = new System.Drawing.Point(161, 2);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(104, 19);
+            this.checkBox3.Size = new System.Drawing.Size(84, 16);
             this.checkBox3.TabIndex = 2;
             this.checkBox3.Text = "前面阵日志";
             this.checkBox3.UseVisualStyleBackColor = true;
@@ -164,9 +172,10 @@ namespace LogWin
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(105, 2);
+            this.checkBox2.Location = new System.Drawing.Point(79, 2);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(104, 19);
+            this.checkBox2.Size = new System.Drawing.Size(84, 16);
             this.checkBox2.TabIndex = 1;
             this.checkBox2.Text = "上位机日志";
             this.checkBox2.UseVisualStyleBackColor = true;
@@ -177,9 +186,10 @@ namespace LogWin
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(10, 2);
+            this.checkBox1.Location = new System.Drawing.Point(8, 2);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(89, 19);
+            this.checkBox1.Size = new System.Drawing.Size(72, 16);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "服务日志";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -199,15 +209,17 @@ namespace LogWin
             this.Column8,
             this.Column9});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 20);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1006, 425);
+            this.dataGridView1.Size = new System.Drawing.Size(754, 340);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             // 
             // Column1
             // 
@@ -294,9 +306,10 @@ namespace LogWin
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(218, 188);
+            this.progressBar1.Location = new System.Drawing.Point(164, 150);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(618, 23);
+            this.progressBar1.Size = new System.Drawing.Size(464, 18);
             this.progressBar1.TabIndex = 2;
             this.progressBar1.Visible = false;
             // 
@@ -306,12 +319,13 @@ namespace LogWin
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 450);
+            this.ClientSize = new System.Drawing.Size(754, 360);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "日志查看器";

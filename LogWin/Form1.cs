@@ -72,6 +72,18 @@ namespace LogWin
             Bind();
         }
 
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex > 0)
+            {
+                new Form2()
+                {
+                    DateTime = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
+                    LogName = dataGridView1.Columns[e.ColumnIndex].DataPropertyName
+                }.Show(); 
+            }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (barIndex > 0 && barIndex < barMax)
@@ -95,12 +107,12 @@ namespace LogWin
                     string[] fileNames = Directory.GetFiles(path);
                     barMax = fileNames.Length * 1000;
                     Invoke(new Action(() => { progressBar1.Maximum = barMax; }));
+                    PropertyInfo[] properties = typeof(LogModel).GetProperties();
                     foreach (string name in fileNames)
                     {
                         if (name.Contains(".xml"))
                         {
                             int type = GetType(path, name);
-                            PropertyInfo[] properties = typeof(LogModel).GetProperties();
                             XmlModel xml = new XmlModel(name, true);
                             float range = 1000f / xml["log"].BrotherCount;
                             for (int i = 0; i < xml["log"].BrotherCount; i++)
