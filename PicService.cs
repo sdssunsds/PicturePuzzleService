@@ -28,6 +28,7 @@ namespace PicturePuzzleService
         private static object lock_rgvXml = new object();
         private static object lock_depthXml = new object();
         private static object lock_serviceXml = new object();
+        private static object lock_lightXml = new object();
         private static DateTime saveTime = DateTime.Now;
         private static XmlModel logXml = null;
         private static XmlModel error = null;
@@ -37,6 +38,7 @@ namespace PicturePuzzleService
         private static XmlModel rgvLog = null;
         private static XmlModel depthLog = null;
         private static XmlModel serviceLog = null;
+        private static XmlModel lightLog = null;
 #if puzzleC
         private static bool locationInitComplete = false;
         private static bool puzzleInitComplete = false;
@@ -172,6 +174,10 @@ namespace PicturePuzzleService
                     {
                         serviceLog?.Save(logPath + "serviceLog.xml");
                     }
+                    lock (lock_lightXml)
+                    {
+                        lightLog?.Save(logPath + "lightLog.xml");
+                    }
                 } while (true);
             });
         }
@@ -212,6 +218,10 @@ namespace PicturePuzzleService
                 lock (lock_serviceXml)
                 {
                     serviceLog = null;
+                }
+                lock (lock_lightXml)
+                {
+                    lightLog = null;
                 }
             }
             string logPath = Application.StartupPath + "\\Log\\" + DateTime.Now.ToString("yyyy-MM-dd") + "\\";
@@ -306,6 +316,17 @@ namespace PicturePuzzleService
                         serviceLog = new XmlModel(logPath + "serviceLog.xml", true);
                     }
                     InsertLog(serviceLog, time, log);
+                }
+            }
+            else if (type == 7)
+            {
+                lock (lock_lightXml)
+                {
+                    if (lightLog == null)
+                    {
+                        lightLog = new XmlModel(logPath + "lightLog.xml", true);
+                    }
+                    InsertLog(lightLog, time, log);
                 }
             }
         }

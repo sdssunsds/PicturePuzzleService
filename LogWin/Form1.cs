@@ -203,7 +203,7 @@ namespace LogWin
             switch (name)
             {
                 case "error":
-                    return 9;
+                    return 10;
                 case "frontLog":
                     return 4;
                 case "backLog":
@@ -216,6 +216,8 @@ namespace LogWin
                     return 8;
                 case "serviceLog":
                     return 2;
+                case "lightLog":
+                    return 9;
                 default:
                     return 3;
             }
@@ -230,6 +232,7 @@ namespace LogWin
             public string front { get; set; }
             public string back { get; set; }
             public string lidar { get; set; }
+            public string light { get; set; }
             public string rgv { get; set; }
             public string depth { get; set; }
             public string error { get; set; }
