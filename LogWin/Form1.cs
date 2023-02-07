@@ -211,13 +211,13 @@ namespace LogWin
                 case "lidarLog":
                     return 6;
                 case "rgvLog":
-                    return 7;
-                case "depthLog":
                     return 8;
+                case "depthLog":
+                    return 9;
                 case "serviceLog":
                     return 2;
                 case "lightLog":
-                    return 9;
+                    return 7;
                 default:
                     return 3;
             }
