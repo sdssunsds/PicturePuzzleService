@@ -230,7 +230,7 @@ namespace PicturePuzzleService
                 Directory.CreateDirectory(logPath);
             }
             string time = DateTime.Now.ToString("HH:mm:ss");
-            if (type != 4 && type != 5 && type != 6)
+            if (type != 4 && type != 5 && type != 6 && type != 7)
             {
                 lock (lock_logXml)
                 {
