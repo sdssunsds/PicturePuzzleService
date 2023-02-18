@@ -25,7 +25,8 @@ namespace PuzzleConsole.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\PuzzleService\\cutimg.engine")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\PuzzleServer\\PicturePuzzleService\\HostWinform\\bin\\Debug\\concat_yolov560_m_640_" +
+            "4_1031.engine")]
         public string EnginePath {
             get {
                 return ((string)(this["EnginePath"]));
@@ -37,7 +38,7 @@ namespace PuzzleConsole.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\PuzzleService\\Upload\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\sourceETL\\Upload\\")]
         public string UploadPath {
             get {
                 return ((string)(this["UploadPath"]));
@@ -49,7 +50,7 @@ namespace PuzzleConsole.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\PuzzleService\\Puzzle\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\sourceETL\\sourceFolders\\source\\")]
         public string PuzzlePath {
             get {
                 return ((string)(this["PuzzlePath"]));

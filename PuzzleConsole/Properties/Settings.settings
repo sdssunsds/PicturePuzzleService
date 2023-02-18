@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="EnginePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\PuzzleService\cutimg.engine</Value>
+      <Value Profile="(Default)">D:\PuzzleServer\PicturePuzzleService\HostWinform\bin\Debug\concat_yolov560_m_640_4_1031.engine</Value>
     </Setting>
     <Setting Name="UploadPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\PuzzleService\Upload\</Value>
+      <Value Profile="(Default)">D:\sourceETL\Upload\</Value>
     </Setting>
     <Setting Name="PuzzlePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\PuzzleService\Puzzle\</Value>
+      <Value Profile="(Default)">D:\sourceETL\sourceFolders\source\</Value>
     </Setting>
     <Setting Name="BakPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\PuzzleService\Bak\</Value>
