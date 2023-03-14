@@ -22,6 +22,7 @@ namespace LogWin
         {
             dataGridView1.AutoGenerateColumns = false;
             Bind();
+            label1.BringToFront();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -72,15 +73,19 @@ namespace LogWin
             Bind();
         }
 
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (e.ColumnIndex > 0)
+            if (dataGridView1.SelectedCells != null && dataGridView1.SelectedCells.Count > 0)
             {
-                new Form2()
+                DataGridViewCell cell = dataGridView1.SelectedCells[0];
+                if (cell.ColumnIndex > 0)
                 {
-                    DateTime = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
-                    LogName = dataGridView1.Columns[e.ColumnIndex].DataPropertyName
-                }.Show(); 
+                    new Form2()
+                    {
+                        DateTime = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
+                        LogName = dataGridView1.Columns[cell.ColumnIndex].DataPropertyName
+                    }.Show(this);
+                }
             }
         }
 
@@ -89,6 +94,7 @@ namespace LogWin
             if (barIndex > 0 && barIndex < barMax)
             {
                 progressBar1.Value = (int)barIndex;
+                label1.Text = (barIndex / barMax * 100).ToString("f2") + "%";
             }
         }
 
@@ -96,7 +102,7 @@ namespace LogWin
         {
             this.Enabled = false;
             dataGridView1.DataSource = null;
-            progressBar1.Visible = timer1.Enabled = true;
+            label1.Visible = progressBar1.Visible = timer1.Enabled = true;
             string date = dateTimePicker1.Value.ToString("yyyy-MM-dd");
             string path = Application.StartupPath + "\\Log\\" + date;
             if (Directory.Exists(path))
@@ -186,14 +192,14 @@ namespace LogWin
                     {
                         dataGridView1.DataSource = bindList;
                         this.Enabled = true;
-                        progressBar1.Visible = timer1.Enabled = false;
+                        label1.Visible = progressBar1.Visible = timer1.Enabled = false;
                     }));
                 });
             }
             else
             {
                 this.Enabled = true;
-                progressBar1.Visible = timer1.Enabled = false;
+                label1.Visible = progressBar1.Visible = timer1.Enabled = false;
             }
         }
 
