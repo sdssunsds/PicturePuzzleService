@@ -1,0 +1,9 @@
+cudart.lib
+cublas.lib
+cudnn.lib
+cudnn64_8.lib
+myelin64_1.lib
+nvinfer.lib
+nvinfer_plugin.lib
+nvonnxparser.lib
+nvparsers.lib

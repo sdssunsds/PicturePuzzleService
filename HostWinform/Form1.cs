@@ -553,6 +553,34 @@ namespace HostWinform
             }
         }
 
+        private void button9_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string file = Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.txt")[0];
+                    string[] pars = new string[5];
+                    using (StreamReader sr = new StreamReader(file))
+                    {
+                        string s = sr.ReadLine();
+                        string[] vs = s.Split(',');
+                        pars[0] = vs[0].Replace("..", folderBrowserDialog.SelectedPath);
+                        pars[1] = vs[1].Replace("..", folderBrowserDialog.SelectedPath);
+                        pars[2] = vs[2];
+                        pars[3] = vs[3];
+                        pars[4] = vs[4];
+                    }
+                    System.Diagnostics.Process.Start(Application.StartupPath + "\\..\\..\\..\\model_change\\v5_trt.exe", string.Join(" ", pars));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             foreach (Control item in flowLayoutPanel2.Controls)

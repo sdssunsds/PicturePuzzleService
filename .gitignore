@@ -383,3 +383,9 @@ MigrationBackup/
 /DLL/cudnn.lib
 /DLL/CppLibDll.h
 /.svn
+/model_change
+/yolov5.6_Trt _new/model/cutimg.engine
+/yolov5.6_Trt _new/model/concat_yolov5x_1024_6.engine
+/yolov5.6_Trt _new/model/concat_yolov560_x_1024_5.engine
+/yolov5.6_Trt _new/model/concat_yolov560_m_640_4_1031.engine
+/yolov5.6_Trt _new/model/concat_m_1024_5.engine
