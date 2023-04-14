@@ -450,19 +450,29 @@ namespace HostWinform
             string sn = cb_sn.Text;
             new Thread(new ThreadStart(() =>
             {
+                Form4 form = new Form4();
+                form.ShowDialog(this);
                 foreach (Control control in flowLayoutPanel2.Controls)
                 {
                     if ((control as CheckBox).Checked)
                     {
+                        form.Addlog($"车型：{mode}  车号：{sn}");
                         string path = control.Tag.ToString();
                         string name = path.Substring(path.LastIndexOf('\\') + 1);
                         string part = control.Text;
-                        File.Copy(path, Properties.Settings.Default.UploadPath + upID + "\\" + name);
-                        UploadImage("http://192.168.0.102:20001/img/Upload/" + upID + "/" + name, part, mode, sn);
+                        form.Addlog($"上传图片路径：{path}");
+                        form.Addlog($"上传部件编号：{part}");
+                        string copy = Properties.Settings.Default.UploadPath + upID + "\\" + name;
+                        File.Copy(path, copy);
+                        form.Addlog($"上传图片拷贝>>{copy}");
+                        string url = "http://192.168.0.102:20001/img/Upload/" + upID + "/" + name;
+                        form.Addlog($"上传图片位置：{url}");
+                        UploadImage(url, part, mode, sn, (string log) => { form.Addlog(log); });
                         Invoke(new Action(() => { progressBar1.Value++; }));
-                        Thread.Sleep(100);
+                        Thread.Sleep(10);
                     }
                 }
+                form.Close();
                 MessageBox.Show("上传完成");
                 Invoke(new Action(() => { this.Enabled = true; }));
             })).Start();
@@ -732,7 +742,7 @@ namespace HostWinform
             }
         }
 
-        private void UploadImage(string path, string part, string mode, string sn)
+        private void UploadImage(string path, string part, string mode, string sn, Action<string> addlog)
         {
             string strURL = Properties.Settings.Default.UploadDataServer + "/planMalfunctionManagement/auth/add" +
                 string.Format("?abnormalPhoto={0}&uniqueNumber={1}&motorCarModel={2}&motorCarNumber={3}&componentNumber={4}",
@@ -751,7 +761,7 @@ namespace HostWinform
             catch (Exception ex)
             {
                 writer = null;
-                MessageBox.Show("连接服务器失败[HTTP上传面阵图片]: " + ex.Message);
+                addlog("连接服务器失败[HTTP上传面阵图片]: " + ex.Message);
                 return;
             }
             writer.Write(payload, 0, payload.Length);
@@ -769,7 +779,8 @@ namespace HostWinform
             StreamReader sRead = new StreamReader(s);
             string postContent = sRead.ReadToEnd();
             sRead.Close();
-            //MessageBox.Show(string.Format("HTTP请求：{0}\r\nHTTP返回：{1}", strURL, postContent));
+            addlog($"HTTP请求：{strURL}");
+            addlog($"HTTP返回：{postContent}");
         }
     }
 }
