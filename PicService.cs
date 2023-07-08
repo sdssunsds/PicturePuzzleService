@@ -1,6 +1,7 @@
 ﻿#define puzzleC  // 使用C++拼图
 
 using GW.XML;
+using PuzzleLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static PuzzleLib.Manager;
 
 namespace PicturePuzzleService
 {
@@ -28,6 +30,8 @@ namespace PicturePuzzleService
         private static object lock_depthXml = new object();
         private static object lock_serviceXml = new object();
         private static object lock_lightXml = new object();
+        private static bool locationInitComplete = false;
+        private static IntPtr objLocation = IntPtr.Zero;
         private static DateTime saveTime = DateTime.Now;
         private static XmlModel logXml = null;
         private static XmlModel error = null;
@@ -39,19 +43,11 @@ namespace PicturePuzzleService
         private static XmlModel serviceLog = null;
         private static XmlModel lightLog = null;
 #if puzzleC
-        private static bool locationInitComplete = false;
         private static bool puzzleInitComplete = false;
         private static IntPtr obj = IntPtr.Zero;
-        private static IntPtr objLocation = IntPtr.Zero;
         public static Func<int[]> HeightFunc;
         public static Func<string, inputrect_4[]> DataFunc;
 #endif
-        private static Dictionary<string, List<int>> savePicArray = null;
-        private static Dictionary<string, List<string>> savePicArray2 = null;
-        private static Dictionary<int, Dictionary<int, byte[]>> picDataRom = null;
-        private static Dictionary<string, Dictionary<int, byte[]>> picDataRom2 = null;
-        private static Dictionary<string, Dictionary<int, byte[]>> picDataRom3 = null;
-        private static Dictionary<string, Dictionary<RobotName, Dictionary<int, byte[]>>> picDataRoms = null;
 
         /// <summary>
         /// 每个待拼接图片的默认宽度
@@ -106,30 +102,7 @@ namespace PicturePuzzleService
 
         public PicService()
         {
-            if (savePicArray == null)
-            {
-                savePicArray = new Dictionary<string, List<int>>();
-            }
-            if (savePicArray2 == null)
-            {
-                savePicArray2 = new Dictionary<string, List<string>>();
-            }
-            if (picDataRom == null)
-            {
-                picDataRom = new Dictionary<int, Dictionary<int, byte[]>>();
-            }
-            if (picDataRom2 == null)
-            {
-                picDataRom2 = new Dictionary<string, Dictionary<int, byte[]>>();
-            }
-            if (picDataRom3 == null)
-            {
-                picDataRom3 = new Dictionary<string, Dictionary<int, byte[]>>();
-            }
-            if (picDataRoms == null)
-            {
-                picDataRoms = new Dictionary<string, Dictionary<RobotName, Dictionary<int, byte[]>>>();
-            }
+            Init();
         }
 
         public static void SaveLog()
@@ -386,32 +359,9 @@ namespace PicturePuzzleService
              */
             if (PictureDelegete.SavePictureFunction?.Invoke(picIndex, dataIndex, dataLength, id, imgData) ?? true)
             {
-                if (!savePicArray.ContainsKey(id))
+                if (UploadComplete1(picIndex, dataIndex, dataLength, id, imgData))
                 {
-                    savePicArray.Add(id, new List<int>());
-                }
-
-                if (!savePicArray[id].Contains(picIndex))
-                {
-                    savePicArray[id].Add(picIndex);
-                }
-
-                if (!picDataRom.ContainsKey(picIndex))
-                {
-                    picDataRom.Add(picIndex, new Dictionary<int, byte[]>());
-                }
-
-                if (picDataRom[picIndex].ContainsKey(dataIndex))
-                {
-                    picDataRom[picIndex][dataIndex] = imgData;
-                }
-                else
-                {
-                    picDataRom[picIndex].Add(dataIndex, imgData);
-                }
-
-                if (picDataRom[picIndex].Count == dataLength)
-                {
+                    string dir = "";
                     try
                     {
                         if (picIndex == 10000)
@@ -422,11 +372,11 @@ namespace PicturePuzzleService
                                 File.Delete(item);
                             }
                         }
-                        string dir = UploadPath + id + "_" + robotID;
+                        dir = UploadPath + id + "_" + robotID;
                         List<byte> bufferRom = new List<byte>();
                         for (int i = 0; i < dataLength; i++)
                         {
-                            bufferRom.AddRange(picDataRom[picIndex][i]);
+                            bufferRom.AddRange(GetBuffer1(picIndex, i));
                         }
                         string path = dir + @"\" + picIndex + ".jpg";
                     save:
@@ -452,10 +402,7 @@ namespace PicturePuzzleService
                         {
                             AddLog("备份线阵图片Error：" + e.Message);
                         }
-                        picDataRom[picIndex].Clear();
-                        picDataRom.Remove(picIndex);
-                        GC.Collect();
-                        savePicArray[id].Sort();
+                        Clear1(picIndex, id);
                     }
                     catch (Exception e)
                     {
@@ -488,31 +435,7 @@ namespace PicturePuzzleService
         /// <param name="imgData">图片数据</param>
         public void UploadImage2(string picIndex, int dataIndex, int dataLength, string id, byte[] imgData, string robotID)
         {
-            if (!savePicArray2.ContainsKey(id))
-            {
-                savePicArray2.Add(id, new List<string>());
-            }
-
-            if (!savePicArray2[id].Contains(picIndex))
-            {
-                savePicArray2[id].Add(picIndex);
-            }
-
-            if (!picDataRom2.ContainsKey(picIndex))
-            {
-                picDataRom2.Add(picIndex, new Dictionary<int, byte[]>());
-            }
-
-            if (picDataRom2[picIndex].ContainsKey(dataIndex))
-            {
-                picDataRom2[picIndex][dataIndex] = imgData;
-            }
-            else
-            {
-                picDataRom2[picIndex].Add(dataIndex, imgData);
-            }
-
-            if (picDataRom2[picIndex].Count == dataLength)
+            if (UploadComplete2(dataIndex, dataLength, id, picIndex, imgData))
             {
                 try
                 {
@@ -520,7 +443,7 @@ namespace PicturePuzzleService
                     List<byte> bufferRom = new List<byte>();
                     for (int i = 0; i < dataLength; i++)
                     {
-                        bufferRom.AddRange(picDataRom2[picIndex][i]);
+                        bufferRom.AddRange(GetBuffer2(i, picIndex));
                     }
                     string path = dir + @"\" + picIndex + ".jpg";
                 save:
@@ -546,10 +469,7 @@ namespace PicturePuzzleService
                     {
                         AddLog("备份线阵图片Error：" + e.Message);
                     }
-                    picDataRom2[picIndex].Clear();
-                    picDataRom2.Remove(picIndex);
-                    GC.Collect();
-                    savePicArray2[id].Sort();
+                    Clear2(picIndex, id);
                 }
                 catch (Exception e)
                 {
@@ -568,21 +488,7 @@ namespace PicturePuzzleService
         /// <param name="imgData">图片数据</param>
         public void UploadImage3(string picName, int dataIndex, int dataLength, string id, byte[] imgData, string robotID)
         {
-            if (!picDataRom3.ContainsKey(picName))
-            {
-                picDataRom3.Add(picName, new Dictionary<int, byte[]>());
-            }
-
-            if (picDataRom3[picName].ContainsKey(dataIndex))
-            {
-                picDataRom3[picName][dataIndex] = imgData;
-            }
-            else
-            {
-                picDataRom3[picName].Add(dataIndex, imgData);
-            }
-
-            if (picDataRom3[picName].Count == dataLength)
+            if (UploadComplete3(dataIndex, dataLength, picName, imgData))
             {
                 try
                 {
@@ -590,7 +496,7 @@ namespace PicturePuzzleService
                     List<byte> bufferRom = new List<byte>();
                     for (int i = 0; i < dataLength; i++)
                     {
-                        bufferRom.AddRange(picDataRom3[picName][i]);
+                        bufferRom.AddRange(GetBuffer3(i, picName));
                     }
                     string path = dir + @"\Location\" + picName;
                 save:
@@ -616,9 +522,7 @@ namespace PicturePuzzleService
                     {
                         AddLog("备份定位图片Error：" + e.Message);
                     }
-                    picDataRom3[picName].Clear();
-                    picDataRom3.Remove(picName);
-                    GC.Collect();
+                    Clear3(picName);
                 }
                 catch (Exception e)
                 {
@@ -642,18 +546,18 @@ namespace PicturePuzzleService
                 }
             }
             Process.Start(Application.StartupPath + "\\PuzzleConsole.exe", id + " " + robotID + " " + number);
-            if (savePicArray.ContainsKey(id))
+            if (UploadComplete0(id))
             {
 #if !puzzleC
                 string[] ids = id.Split('_');
-                if (PictureDelegete.PuzzlePictureFunction?.Invoke(id, savePicArray[id].ToArray()) ?? true)
+                if (PictureDelegete.PuzzlePictureFunction?.Invoke(id, GetPicArray(id)) ?? true)
                 {
                     if (PuzzleCount == 0)
                     {
                         Directory.CreateDirectory(ZipPath.Substring(0, ZipPath.LastIndexOf(@"\")));
                         Directory.CreateDirectory(PuzzlePath + id);
-                        int remainder = savePicArray[id].Count % 8;
-                        int length = savePicArray[id].Count / 8;
+                        int remainder = GetPicArrayCount(id) % 8;
+                        int length = GetPicArrayCount(id) / 8;
                         int index = 0;
                         for (int i = 0; i < 8; i++)
                         {
@@ -663,19 +567,19 @@ namespace PicturePuzzleService
                             }
                             else
                             {
-                                length += savePicArray[id].Count / 8;
+                                length += GetPicArrayCount(id) / 8;
                             }
 
-                #region 压缩拼图
+                            #region 压缩拼图
                             int currentHeight = 0;
-                            int height = 2260 * (i == 0 ? length : savePicArray[id].Count / 8);
+                            int height = 2260 * (i == 0 ? length : GetPicArrayCount(id) / 8);
                             using (Bitmap tableChartImage = new Bitmap(2048, height / 2))
                             {
                                 using (Graphics graph = Graphics.FromImage(tableChartImage))
                                 {
                                     for (int j = index; j < length; j++)
                                     {
-                                        using (Image img = Image.FromFile(UploadPath + id + @"\" + savePicArray[id][j] + ".jpg"))
+                                        using (Image img = Image.FromFile(UploadPath + id + @"\" + GetPicArrayIndex(j, id) + ".jpg"))
                                         {
                                             using (Bitmap tmp = new Bitmap(img, 2048, 1130))
                                             {
@@ -687,14 +591,14 @@ namespace PicturePuzzleService
                                 }
                                 CompressImg(PuzzlePath + id + @"\" + ids[0] + "_" + ids[1] + "_" + (i + 1) + "_" + robotID + ".jpg", tableChartImage, 100);
                             }
-                #endregion
+                            #endregion
                             index = length;
                         }
                     }
                     else
                     {
                         int count = PuzzleCount;
-                        int length = savePicArray[id].Count / count + (savePicArray[id].Count % count > 0 ? 1 : 0);
+                        int length = GetPicArrayCount(id) / count + (GetPicArrayCount(id) % count > 0 ? 1 : 0);
                         for (int i = 0; i < length; i++)
                         {
                             int drawY = 0;
@@ -703,9 +607,9 @@ namespace PicturePuzzleService
                             for (int j = 0; j < count; j++)
                             {
                                 int index = i * count + j;
-                                if (index < savePicArray[id].Count)
+                                if (index < GetPicArrayCount(id))
                                 {
-                                    Image image = Image.FromFile(UploadPath + id + @"\" + savePicArray[id][index] + ".jpg");
+                                    Image image = Image.FromFile(UploadPath + id + @"\" + GetPicArrayIndex(index, id) + ".jpg");
                                     g.DrawImage(image, 0, drawY, DefaultWidth, DefaultHeight);
                                     image.Dispose();
                                     drawY += DefaultHeight;
@@ -714,12 +618,10 @@ namespace PicturePuzzleService
                             CreateImageFromBytes(PuzzlePath + id + @"\" + ids[0] + "_" + ids[1] + "_" + (i + 1) + "_" + robotID + ".jpg", ImageToBytes(bitmap));
                         }
                     }
+                }
 #endif
             }
-            savePicArray.Remove(id);
-            savePicArray2.Remove(id);
-            picDataRom.Clear();
-            picDataRom2.Clear();
+            Clear0(id);
         }
 
         /// <summary>
@@ -736,25 +638,9 @@ namespace PicturePuzzleService
         public string UploadPictrue(string parsIndex, int robot, int dataIndex, int dataLength, string id, byte[] imgData, string robotID)
         {
             RobotName robotName = (RobotName)robot;
-            if (!picDataRoms.ContainsKey(parsIndex))
-            {
-                picDataRoms.Add(parsIndex, new Dictionary<RobotName, Dictionary<int, byte[]>>());
-            }
-
-            if (!picDataRoms[parsIndex].ContainsKey(robotName))
-            {
-                picDataRoms[parsIndex].Add(robotName, new Dictionary<int, byte[]>());
-            }
-
-            if (!picDataRoms[parsIndex][robotName].ContainsKey(dataIndex))
-            {
-                picDataRoms[parsIndex][robotName].Add(dataIndex, null);
-            }
-            picDataRoms[parsIndex][robotName][dataIndex] = imgData;
-
             try
             {
-                if (picDataRoms[parsIndex][robotName].Count == dataLength)
+                if (UploadComplete4(dataIndex, dataLength, parsIndex, robotName, imgData))
                 {
                     string dir = UploadPath + id + "_" + robotID + @"\" + robotName.ToString();
                     if (!Directory.Exists(dir))
@@ -764,7 +650,7 @@ namespace PicturePuzzleService
                     List<byte> bufferRom = new List<byte>();
                     for (int i = 0; i < dataLength; i++)
                     {
-                        bufferRom.AddRange(picDataRoms[parsIndex][robotName][i]);
+                        bufferRom.AddRange(GetBuffer4(i, parsIndex, robotName));
                     }
                     string path = dir + @"\" + parsIndex + ".jpg";
                 save:
@@ -802,13 +688,7 @@ namespace PicturePuzzleService
                     {
                         AddLog("备份面阵图片Error：" + e.Message);
                     }
-                    picDataRoms[parsIndex][robotName].Clear();
-                    picDataRoms[parsIndex].Remove(robotName);
-                    if (picDataRoms[parsIndex].Count == 0)
-                    {
-                        picDataRoms.Remove(parsIndex);
-                    }
-                    GC.Collect();
+                    Clear4(parsIndex, robotName);
                     return path;
                 }
             }
@@ -969,10 +849,5 @@ namespace PicturePuzzleService
         {
             
         }
-    }
-
-    public enum RobotName
-    {
-        Front = 0, Back
     }
 }

@@ -451,7 +451,7 @@ namespace HostWinform
             new Thread(new ThreadStart(() =>
             {
                 Form4 form = new Form4();
-                form.ShowDialog(this);
+                form.Show(this);
                 foreach (Control control in flowLayoutPanel2.Controls)
                 {
                     if ((control as CheckBox).Checked)

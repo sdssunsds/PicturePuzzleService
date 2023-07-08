@@ -59,6 +59,9 @@
       <HintPath>Dll\GW.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PuzzleLib">
+      <HintPath>Dll\PuzzleLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
